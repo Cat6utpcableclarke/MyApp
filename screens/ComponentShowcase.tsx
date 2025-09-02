@@ -1,45 +1,59 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Button, ScrollView, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useState } from 'react';
-import { Button, ScrollView } from 'react-native';
-import { Image } from 'react-native';
-
+import Sound from 'react-native-sound';
+import { Platform } from 'react-native';
 type RootStackParamList = {
-    Greet: { name: string };
+  Greet: { name: string };
 };
+
 function ComponentShowcase() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [count, setCount] = useState(0);
 
+ 
+  const handleIncrement = () => {
+    setCount(count + 1);
+    Sound.setCategory('Playback');
+    const fileName = Platform.OS === 'android' ? 'vine_boom' : 'vine-boom.mp3';
+    const sound = new Sound(
+      fileName,
+      Sound.MAIN_BUNDLE,
+      (error) => {
+        if (error) {
+          console.log('Failed to load sound', error);
+          return;
+        }
+        sound.play(() => {
+          sound.release();
+        });
+      }
+    );
+  };
+
   return (
     <View style={styles.container}>
+
       <Text style={styles.title}>Component Showcase</Text>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-    
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Image Component</Text>
           <Image source={require('../images/shrek.jpg')} style={styles.image} />
         </View>
-
-    
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Text Component</Text>
           <Text style={styles.text}>
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
           </Text>
         </View>
-
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Counter</Text>
           <Text style={styles.counter}>Count: {count}</Text>
           <View style={styles.buttonRow}>
-            <Button title="Tap to Increment" onPress={() => setCount(count + 1)} />
+            <Button title="Tap to Increment" onPress={handleIncrement} />
           </View>
         </View>
-
-       
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Navigation</Text>
           <View style={styles.buttonRow}>
