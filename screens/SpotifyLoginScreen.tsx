@@ -70,7 +70,7 @@ fbIcon: {
   logo: {
   width: 120,
   height: 120,
-  marginTop: 40,
+  marginTop: 100,
   marginBottom: 5,
   resizeMode: 'contain',
   },
