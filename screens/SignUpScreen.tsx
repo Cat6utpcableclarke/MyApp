@@ -1,30 +1,37 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import { LinearGradient } from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack'; 
-type RootStackParamList = {
-  SignUp: undefined;
-  PlaylistsScreen: undefined;
-};
- 
-const SpotifyLoginScreen = () => {
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-    return (
+type RootStackParamList = {
+  SpotifyLogin: undefined;
+};
+const SignUpScreen = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  return (
         <LinearGradient
           colors={['#232526', '#111010']}
           start={{ x: 0.5, y: 0 }}
           end={{ x: 0.5, y: 1 }}
           style={styles.container}
         >
-            <Image source={require('../images/Spotify_logo_without_text.svg.png')} style={styles.logo} alt="Spotify Logo" />
-            <Text style={styles.title}>Spotify</Text>
-            <View style={styles.form}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 20, marginTop: 60 }}>
+            <Image source={require('../images/Spotify_logo_without_text.svg.png')} style={styles.logo} />
+            <Text style={styles.title}>  Spotify</Text>
+        </View>
+
+        <View style={styles.form}>
+        <TextInput
+          placeholder="Email"
+          placeholderTextColor="#888"
+          style={[styles.input, { marginTop: 30 }]}
+        />
         <TextInput
           placeholder="Username"
           placeholderTextColor="#888"
-          style={[styles.input, { marginTop: 30 }]}
+          style={styles.input}
         />
         <TextInput
           placeholder="Password"
@@ -32,28 +39,24 @@ const SpotifyLoginScreen = () => {
           secureTextEntry
           style={styles.input}
         />
-          <TouchableOpacity style={styles.forgot} onPress={() => {/* TODO: handle forgot password */}}>
-             <Text style={styles.forgot}>Forgot password?</Text>
-          </TouchableOpacity>
-        <TouchableOpacity style={styles.loginButton} activeOpacity={0.8} onPress={() => { navigation.navigate('PlaylistsScreen'); }}>
-          <Text style={styles.loginButtonText}>Sign In</Text>
+        <TouchableOpacity style={styles.loginButton} activeOpacity={0.8}>
+          <Text style={styles.loginButtonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.connectText}>Be Correct With</Text>
+      <Text style={styles.connectText}>Or sign up with</Text>
       <View style={styles.socialRow}>
         <Image source={require('../images/facebook.png')} style={styles.fbIcon} alt="Facebook" />
         <Image source={require('../images/social.png')} style={styles.fbIcon} alt="Google Button" />
       </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 7 }}>
-        <Text style={{ color: '#888' }}>Don't have an account? </Text>
-        <TouchableOpacity onPress={() => { navigation.navigate('SignUp'); }}>
-          <Text style={{ color: '#1DB954' }}>Sign Up</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+        <Text style={{ color: '#888' }}>Already have an account? </Text>
+        <TouchableOpacity onPress={() => { navigation.navigate('SpotifyLogin') }}>
+          <Text style={{ color: '#1DB954', fontWeight: 'bold' }}>Log In</Text>
         </TouchableOpacity>
       </View>
     </LinearGradient>
   );
 }
-
 const styles = StyleSheet.create({
 socialRow: {
   flexDirection: 'row',
@@ -79,9 +82,8 @@ fbIcon: {
     justifyContent: 'flex-start',
   },
   logo: {
-  width: 120,
-  height: 120,
-  marginTop: 100,
+  width: 50,
+  height: 50,
   marginBottom: 5,
   resizeMode: 'contain',
   },
@@ -147,5 +149,6 @@ fbIcon: {
     marginTop: 10,
   },
 });
+export default SignUpScreen;
 
-export default SpotifyLoginScreen;
+

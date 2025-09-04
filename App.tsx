@@ -5,6 +5,8 @@ import Test1 from './screens/Test1';
 import Greet from './screens/Greet';
 import ComponentShowcase from './screens/ComponentShowcase';  
 import SpotifyLoginScreen from './screens/SpotifyLoginScreen';
+import SignUpScreen from './screens/SignUpScreen';
+import ProfileScreen from './screens/ProfileScreen';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -16,6 +18,17 @@ export default function App() {
           component={SpotifyLoginScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUpScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen
           name="ComponentShowcase"
           component={ComponentShowcase}
